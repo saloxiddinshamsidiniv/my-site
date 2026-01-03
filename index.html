@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>SMS yuborish</h2>
+    <label>Nomeringizni kriting</label><br><br>
+    <input type="text" id="phone" placeholder="+998901234567"><br>
+    <button onclick="yuborish()">yuborish</button>
+    <p id="p"></p>
+    <script>
+        async function yuborish(){
+            try{   
+            let phone=document.getElementById("phone").value
+            let p=document.getElementById("p")
+           const res=await fetch('/send-code',{
+                method:"POST",
+                headers:{'Content-Type': 'application/json'},
+                body:JSON.stringify({phone})
+            })
+        const data=await res.json()
+        document.getElementById("p").innerText=data.message||data.error
+        }
+            catch(error){
+document.getElementById("p").innerText="Server bilan aloqa uzildi"
+            }
+        }
+    </script>
+</body>
+</html>
